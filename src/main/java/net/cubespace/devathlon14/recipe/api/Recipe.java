@@ -13,12 +13,7 @@ public abstract class Recipe implements org.bukkit.inventory.Recipe {
 
     protected int currentLevel = 0;
     protected boolean isLevelable = false;
-
-    /**
-     * This method should be called when an Player tries to craft this item
-     * @return The itemStack which should be given to the Player
-     */
-    public abstract ItemStack onCrafting();
+    private int maxLevel = 0;
 
     /**
      * Create the shaped Recipe which we need to register to Bukkit
@@ -38,7 +33,11 @@ public abstract class Recipe implements org.bukkit.inventory.Recipe {
 
         // Get the Ingredients
         for ( RecipeContent recipeContent : this.getClass().getAnnotationsByType( RecipeContent.class ) ) {
-            shapedRecipe.setIngredient( recipeContent.value(), recipeContent.material() );
+            if ( isLevelable && recipeContent.canLevel() && currentLevel > 1 ) {
+                shapedRecipe.setIngredient( recipeContent.value(), recipeContent.material(), currentLevel - 1 );
+            } else {
+                shapedRecipe.setIngredient( recipeContent.value(), recipeContent.material() );
+            }
         }
 
         return shapedRecipe;
@@ -51,10 +50,15 @@ public abstract class Recipe implements org.bukkit.inventory.Recipe {
         // Check if this Recipe is levelable
         if ( this.getClass().isAnnotationPresent( Levelable.class ) ) {
             Levelable levelable = this.getClass().getAnnotation( Levelable.class );
+            this.isLevelable = levelable.value();
+            this.maxLevel = levelable.maxLevel();
 
+            for ( this.currentLevel = 1; this.currentLevel < this.maxLevel + 1; this.currentLevel++ ) {
+                Bukkit.getServer().addRecipe( getShapedRecipe() );
+            }
+        } else {
+            Bukkit.getServer().addRecipe( getShapedRecipe() );
         }
-
-        Bukkit.getServer().addRecipe( getShapedRecipe() );
     }
 
 }

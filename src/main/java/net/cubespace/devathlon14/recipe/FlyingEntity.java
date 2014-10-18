@@ -11,20 +11,17 @@ import org.bukkit.inventory.ItemStack;
 /**
  * Created by Fabian on 18.10.2014.
  */
-@RecipeShape( {" D ", " S ", "   "} )
+@RecipeShape( { " D ", " S ", "   " } )
 @RecipeContent( value = 'D', material = Material.FEATHER )
-@RecipeContent( value = 'S', material = Material.EGG )
+@RecipeContent( value = 'S', material = Material.EGG, canLevel = true )
 @Levelable( value = true, maxLevel = 25 )
 public class FlyingEntity extends Recipe {
 
-    private static String itemName = "";
+    private static String itemName = "Flying Chicken Level {level}";
 
     @Override
     public ItemStack getResult() {
-        return ItemstackUtils.renameItem( new ItemStack( Material.EGG ), itemName );
+        return ItemstackUtils.renameItem( new ItemStack( Material.EGG, 1, (short) currentLevel ), itemName.replace( "{level}", String.valueOf( currentLevel ) ) );
     }
 
-    @Override public ItemStack onCrafting() {
-        return null;
-    }
 }

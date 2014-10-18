@@ -13,4 +13,5 @@ import java.lang.annotation.*;
 public @interface RecipeContent {
     char value() default ' ';
     Material material() default Material.AIR;
+    boolean canLevel() default false;
 }
