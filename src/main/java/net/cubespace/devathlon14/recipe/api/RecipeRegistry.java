@@ -7,6 +7,7 @@ import java.util.List;
  * Created by Fabian on 18.10.2014.
  */
 public class RecipeRegistry {
+
     private static List<Recipe> recipes = new ArrayList<>();
 
     /**
@@ -25,4 +26,5 @@ public class RecipeRegistry {
     public static List<Recipe> getRecipes() {
         return new ArrayList<>( recipes );
     }
+
 }

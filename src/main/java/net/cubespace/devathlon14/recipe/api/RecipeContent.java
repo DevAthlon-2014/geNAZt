@@ -11,7 +11,9 @@ import java.lang.annotation.*;
 @Target( ElementType.TYPE )
 @Repeatable( RecipeContents.class )
 public @interface RecipeContent {
+
     char value() default ' ';
     Material material() default Material.AIR;
     boolean canLevel() default false;
+
 }

@@ -11,6 +11,8 @@ import java.lang.annotation.Target;
 @Retention( RetentionPolicy.RUNTIME )
 @Target( ElementType.TYPE )
 public @interface Levelable {
+
     boolean value() default false;
     int maxLevel() default 0;
+
 }

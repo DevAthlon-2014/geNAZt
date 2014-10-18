@@ -1,6 +1,9 @@
 package net.cubespace.devathlon14;
 
 import lombok.Getter;
+import net.cubespace.devathlon14.entity.FlyingChicken;
+import net.cubespace.devathlon14.entity.api.EntityRegistry;
+import net.cubespace.devathlon14.listener.EntityDamageByEntityListener;
 import net.cubespace.devathlon14.listener.PlayerInteractListener;
 import net.cubespace.devathlon14.recipe.FlyingEntity;
 import net.cubespace.devathlon14.recipe.api.RecipeRegistry;
@@ -18,10 +21,9 @@ public class EffectPlugin extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        // Register all given Recipes
+        // Register all given Recipes, Entities and Listener
+        registerEntities();
         registerRecipes();
-
-        // Register all Listeners
         registerListener();
     }
 
@@ -29,8 +31,13 @@ public class EffectPlugin extends JavaPlugin {
         RecipeRegistry.addRecipe( new FlyingEntity() );
     }
 
+    private void registerEntities() {
+        EntityRegistry.addEntity( new FlyingChicken() );
+    }
+
     private void registerListener() {
         Bukkit.getPluginManager().registerEvents( new PlayerInteractListener(), this );
+        Bukkit.getPluginManager().registerEvents( new EntityDamageByEntityListener(), this );
     }
 
 }
