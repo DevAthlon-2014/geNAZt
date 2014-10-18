@@ -38,12 +38,11 @@ public class FlyingEntity extends Recipe {
         if (   playerInteractEvent.getItem().getItemMeta().hasDisplayName()
             && playerInteractEvent.getItem().getItemMeta().getDisplayName().startsWith( replaceName ) ) {
             Player player = playerInteractEvent.getPlayer();
-            Integer level = Integer.getInteger( playerInteractEvent.getItem().getItemMeta().getDisplayName().replace( replaceName, "" ) );
 
             Chicken chicken = (Chicken) player.getWorld().spawnEntity( player.getLocation(), EntityType.CHICKEN );
             chicken.setTarget( player );
             chicken.setCustomName( playerInteractEvent.getItem().getItemMeta().getDisplayName() );
-            chicken.setMetadata( "level", new FixedMetadataValue( EffectPlugin.getInstance(), level ) );
+            chicken.setMetadata( "level", new FixedMetadataValue( EffectPlugin.getInstance(), playerInteractEvent.getItem().getDurability() ) );
 
             playerInteractEvent.setCancelled( true );
         }

@@ -12,11 +12,13 @@ import java.util.List;
  */
 public enum Effects {
 
-    MOBSPELL( WrapperPlayServerWorldParticles.ParticleEffect.MOB_SPELL );
+    MOBSPELL( WrapperPlayServerWorldParticles.ParticleEffect.MOB_SPELL.getParticleName() ),
+    SMOKE( "smoke" ),
+    SPELL( "spell" );
 
-    private WrapperPlayServerWorldParticles.ParticleEffect effect;
+    private String effect;
 
-    Effects( WrapperPlayServerWorldParticles.ParticleEffect effect ) {
+    Effects( String effect ) {
         this.effect = effect;
     }
 
@@ -29,10 +31,11 @@ public enum Effects {
      */
     private WrapperPlayServerWorldParticles getPacket( Location location, int numberOfParticles, Vector offset ) {
         WrapperPlayServerWorldParticles particles = new WrapperPlayServerWorldParticles();
-        particles.setParticleEffect( effect );
+        particles.setParticleName( effect );
         particles.setNumberOfParticles( numberOfParticles );
         particles.setLocation( location );
         particles.setOffset( offset );
+        particles.setParticleSpeed( 0.1f );
 
         return particles;
     }
