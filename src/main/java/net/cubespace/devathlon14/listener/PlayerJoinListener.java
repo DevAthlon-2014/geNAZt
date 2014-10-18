@@ -1,6 +1,7 @@
 package net.cubespace.devathlon14.listener;
 
 import net.cubespace.devathlon14.EffectPlugin;
+import net.cubespace.devathlon14.PlayerRegistry;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -25,6 +26,9 @@ public class PlayerJoinListener implements Listener {
 
         // Add to Scoreboard
         event.getPlayer().setScoreboard( EffectPlugin.getInstance().getScoreboard() );
+
+        // Create new Level
+        PlayerRegistry.addPlayer( event.getPlayer() );
     }
 
 }

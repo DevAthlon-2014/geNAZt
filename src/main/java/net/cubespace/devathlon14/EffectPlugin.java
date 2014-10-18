@@ -63,6 +63,9 @@ public class EffectPlugin extends JavaPlugin {
             Arrays
                     .asList( Bukkit.getOnlinePlayers() )
                     .forEach( player -> player.sendMessage( "Das Spiel ist vorbei. Bitte entnehme den Gewinner aus dem Scoreboard." ) );
+
+            // Shutdown after 30 Seconds
+            Bukkit.getScheduler().scheduleSyncDelayedTask( this, Bukkit::shutdown, 30 * 20 );
         }, 10 * 60 * 20 );
     }
 
@@ -80,6 +83,7 @@ public class EffectPlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents( new PlayerJoinListener(), this );
         Bukkit.getPluginManager().registerEvents( new PlayerDeathListener(), this );
         Bukkit.getPluginManager().registerEvents( new CreatureSpawnListener(), this );
+        Bukkit.getPluginManager().registerEvents( new PlayerQuitListener(), this );
     }
 
 }

@@ -8,10 +8,8 @@ import net.cubespace.devathlon14.recipe.api.RecipeShape;
 import net.cubespace.devathlon14.util.ItemstackUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Chicken;
-import org.bukkit.entity.Egg;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -44,6 +42,7 @@ public class FlyingEntity extends Recipe {
             chicken.setCustomName( playerInteractEvent.getItem().getItemMeta().getDisplayName() );
             chicken.setMetadata( "level", new FixedMetadataValue( EffectPlugin.getInstance(), playerInteractEvent.getItem().getDurability() ) );
 
+            playerInteractEvent.getPlayer().getInventory().remove( Material.EGG );
             playerInteractEvent.setCancelled( true );
         }
     }

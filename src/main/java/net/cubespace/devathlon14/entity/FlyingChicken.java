@@ -1,6 +1,7 @@
 package net.cubespace.devathlon14.entity;
 
 import net.cubespace.devathlon14.EffectPlugin;
+import net.cubespace.devathlon14.PlayerRegistry;
 import net.cubespace.devathlon14.entity.api.Entity;
 import net.cubespace.devathlon14.util.Effects;
 import org.bukkit.Bukkit;
@@ -8,11 +9,11 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.util.Vector;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -88,9 +89,12 @@ public class FlyingChicken extends Entity {
 
     @Override
     public void onDamage( EntityDamageByEntityEvent event ) {
-        if ( event.getEntity() instanceof Chicken && event.getEntity().hasMetadata( "level" ) ) {
+        if ( event.getEntity() instanceof Chicken && event.getEntity().hasMetadata( "level" ) && event.getDamager() instanceof Player ) {
             event.getEntity().setPassenger( event.getDamager() );
             entities.put( event.getEntity(), 0 );
+
+            PlayerRegistry.setLevel( (Player) event.getDamager(), event.getEntity().getMetadata( "level" ).get( 0 ).asInt() );
+
             event.setCancelled( true );
         }
     }
