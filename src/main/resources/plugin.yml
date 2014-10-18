@@ -1,0 +1,5 @@
+name: DevAthlon2014
+author: geNAZt
+main: net.cubespace.devathlon14.EffectPlugin
+version: ${version}
+depend: []
