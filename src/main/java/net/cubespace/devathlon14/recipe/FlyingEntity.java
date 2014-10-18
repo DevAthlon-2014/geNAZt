@@ -1,5 +1,6 @@
 package net.cubespace.devathlon14.recipe;
 
+import lombok.Getter;
 import net.cubespace.devathlon14.EffectPlugin;
 import net.cubespace.devathlon14.recipe.api.Levelable;
 import net.cubespace.devathlon14.recipe.api.Recipe;
@@ -23,7 +24,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 @Levelable( value = true, maxLevel = 25 )
 public class FlyingEntity extends Recipe {
 
-    private static String itemName = "Flying Chicken Level {level}";
+    @Getter private static String itemName = "Flying Chicken Level {level}";
     private static String replaceName = itemName.replace( "{level}", "" );
 
     @Override

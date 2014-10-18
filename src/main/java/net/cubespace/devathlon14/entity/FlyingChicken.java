@@ -49,6 +49,10 @@ public class FlyingChicken extends Entity {
                                     Score score =  EffectPlugin.getInstance().getScoreboard().getObjective( "chicken" ).getScore( ((Player) entity.getPassenger()).getName() );
                                     score.setScore( score.getScore() - level );
 
+                                    // Reset the level
+                                    Player current = (Player) entity.getPassenger();
+                                    PlayerRegistry.resetLevel( current );
+
                                     return;
                                 }
                             }
@@ -57,7 +61,7 @@ public class FlyingChicken extends Entity {
                             entity
                                     .getNearbyEntities( 2, 2, 2 )
                                     .forEach( aroundEntity -> {
-                                        if ( aroundEntity instanceof Chicken && aroundEntity.getPassenger() != null ) {
+                                        if ( aroundEntity instanceof Chicken && aroundEntity.getPassenger() != null && entities.containsKey( aroundEntity ) ) {
                                             // Le explode
                                             entity.getWorld().createExplosion( entity.getLocation(), 5f );
                                             entities.remove( entity );
@@ -73,6 +77,13 @@ public class FlyingChicken extends Entity {
                                                 score = EffectPlugin.getInstance().getScoreboard().getObjective( "chicken" ).getScore( ((Player) aroundEntity.getPassenger()).getName() );
                                                 score.setScore( score.getScore() + anotherLevel );
                                             }
+
+                                            // Increase the Chicken level for both sides
+                                            Player other = (Player) aroundEntity.getPassenger();
+                                            Player current = (Player) entity.getPassenger();
+
+                                            PlayerRegistry.increaseLevel( other );
+                                            PlayerRegistry.increaseLevel( current );
                                         }
                                     } );
                         }
