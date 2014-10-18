@@ -3,6 +3,8 @@ package net.cubespace.devathlon14.recipe.api;
 import com.google.common.base.Preconditions;
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 
@@ -14,6 +16,14 @@ public abstract class Recipe implements org.bukkit.inventory.Recipe {
     protected int currentLevel = 0;
     protected boolean isLevelable = false;
     private int maxLevel = 0;
+
+    /**
+     * Called when an Item from this Recipe gets hit on the ground
+     * @param playerInteractEvent   The playerInteractEvent which got fired
+     */
+    public void onInteract( PlayerInteractEvent playerInteractEvent ) {
+
+    }
 
     /**
      * Create the shaped Recipe which we need to register to Bukkit
