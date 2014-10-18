@@ -27,23 +27,31 @@ public class FlyingChicken extends Entity {
 
             new BukkitRunnable() {
 
+                private int flytime = 0;
+
                 @Override
                 public void run() {
                     if ( event.getEntity().isDead() || !event.getEntity().isValid() || event.getEntity().getPassenger() == null ) {
                         cancel();
                     }
 
-                    for ( BlockFace blockFace : faces ) {
-                        if ( event.getEntity().getLocation().getBlock().getRelative( blockFace ).getType().isSolid() ) {
-                            // Le explode
-                            event.getEntity().getWorld().createExplosion( event.getEntity().getLocation(), 2f );
-                            cancel();
+                    if ( flytime > 40 ) {
+                        for ( BlockFace blockFace : faces ) {
+                            if ( event.getEntity().getLocation().getBlock().getRelative( blockFace ).getType().isSolid() ) {
+                                // Le explode
+                                event.getEntity().getWorld().createExplosion( event.getEntity().getLocation(), 5f );
+                                cancel();
+                            }
                         }
+
+                        flytime = 41;
                     }
 
                     Integer level = event.getEntity().getMetadata( "level" ).get( 0 ).asInt();
                     event.getEntity().setVelocity( event.getDamager().getLocation().getDirection().normalize().multiply( level * 0.18 ) );
                     Effects.SPELL.broadcastEffect( Arrays.asList( Bukkit.getOnlinePlayers() ), event.getEntity().getLocation(), level, new Vector( 0,0,0 ) );
+
+                    flytime += 1;
                 }
 
             }.runTaskTimer( EffectPlugin.getInstance(), 1, 1 );
